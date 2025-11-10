@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/hakaton/static/css/main.c7df1690.css",
-    "main.js": "/hakaton/static/js/main.3538c591.js",
+    "main.css": "/hakaton/static/css/main.63553cad.css",
+    "main.js": "/hakaton/static/js/main.a9f8c6ef.js",
     "static/js/453.a23aa175.chunk.js": "/hakaton/static/js/453.a23aa175.chunk.js",
     "index.html": "/hakaton/index.html",
-    "main.c7df1690.css.map": "/hakaton/static/css/main.c7df1690.css.map",
-    "main.3538c591.js.map": "/hakaton/static/js/main.3538c591.js.map",
+    "main.63553cad.css.map": "/hakaton/static/css/main.63553cad.css.map",
+    "main.a9f8c6ef.js.map": "/hakaton/static/js/main.a9f8c6ef.js.map",
     "453.a23aa175.chunk.js.map": "/hakaton/static/js/453.a23aa175.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c7df1690.css",
-    "static/js/main.3538c591.js"
+    "static/css/main.63553cad.css",
+    "static/js/main.a9f8c6ef.js"
   ]
 }
