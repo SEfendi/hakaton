@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import "./Flipgame.scss";
 
-
 export default function Flipgame() {
-    const emojiSets = [
-        ["😊", "❤️", "🔥", "😎", "🤩", "💫", "✨", "🥰"],
-        ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼"],
-        ["🍒", "🍉", "🍋", "🥝", "🍇", "🍓", "🍑", "🍍"],
-        ["⚽", "🎮", "🎧", "🎲", "🏀", "🏓", "🥏", "🥊"],
+    const allEmojis = [
+        "😊","❤️","🔥","😎","🤩","💫","✨","🥰",
+        "🐶","🐱","🐭","🐹","🐰","🦊","🐻","🐼",
+        "🍒","🍉","🍋","🥝","🍇","🍓","🍑","🍍",
+        "⚽","🎮","🎧","🎲","🏀","🏓","🥏","🥊",
+        "🌙","⭐","⚡","☀️","🌈","❄️","🍀","🌹",
+        "🚗","✈️","🚀","🚁","🚤","🏍️","🚲","🚜"
     ];
 
     const [cards, setCards] = useState([]);
@@ -16,10 +17,13 @@ export default function Flipgame() {
     const [lock, setLock] = useState(false);
     const [moves, setMoves] = useState(0);
     const [won, setWon] = useState(false);
+    const [size, setSize] = useState(4); // ← размер поля
 
     const initGame = () => {
-        const set = emojiSets[Math.floor(Math.random() * emojiSets.length)];
-        const shuffled = [...set, ...set]
+        const pairs = (size * size) / 2;
+        const selected = allEmojis.sort(() => Math.random() - 0.5).slice(0, pairs);
+
+        const shuffled = [...selected, ...selected]
             .sort(() => Math.random() - 0.5)
             .map((emoji, index) => ({ id: index, emoji, flipped: false, matched: false }));
 
@@ -33,7 +37,7 @@ export default function Flipgame() {
 
     useEffect(() => {
         initGame();
-    }, []);
+    }, [size]); // ← пересоздаём при смене сложности
 
     useEffect(() => {
         if (cards.length && cards.every((c) => c.matched)) {
@@ -64,15 +68,11 @@ export default function Flipgame() {
 
         if (cards[i].emoji === cards[j].emoji) {
             setCards((prev) =>
-                prev.map((c, idx) =>
-                    idx === i || idx === j ? { ...c, matched: true } : c
-                )
+                prev.map((c, idx) => (idx === i || idx === j ? { ...c, matched: true } : c))
             );
         } else {
             setCards((prev) =>
-                prev.map((c, idx) =>
-                    idx === i || idx === j ? { ...c, flipped: false } : c
-                )
+                prev.map((c, idx) => (idx === i || idx === j ? { ...c, flipped: false } : c))
             );
         }
 
@@ -84,12 +84,23 @@ export default function Flipgame() {
     return (
         <div className="minigame">
             <div className="mini-wrapper">
+
+                {/* Выбор сложности */}
+                <div className="difficulty">
+                    <button onClick={() => setSize(4)}>4x4</button>
+                    <button onClick={() => setSize(6)}>6x6</button>
+                    <button onClick={() => setSize(8)}>8x8</button>
+                </div>
+
                 <div className="mini-topbar">
                     <span className="badge">Ходы: {moves}</span>
                     <button className="mini-btn" onClick={initGame}>⟲ Сыграть снова</button>
                 </div>
 
-                <div className="mini-board">
+                <div
+                    className="mini-board"
+                    style={{ gridTemplateColumns: `repeat(${size}, 1fr)` }} // ← динамический размер
+                >
                     {cards.map((card, index) => (
                         <div
                             key={card.id}
